@@ -15,18 +15,19 @@
  */
 package com.github.rtyley.android.sherlock.roboguice.activity;
 
+import android.app.Activity;
 import roboguice.RoboGuice;
 import roboguice.activity.event.OnActivityResultEvent;
-import roboguice.activity.event.OnConfigurationChangedEvent;
 import roboguice.activity.event.OnContentChangedEvent;
-import roboguice.activity.event.OnCreateEvent;
-import roboguice.activity.event.OnDestroyEvent;
 import roboguice.activity.event.OnNewIntentEvent;
 import roboguice.activity.event.OnPauseEvent;
 import roboguice.activity.event.OnRestartEvent;
 import roboguice.activity.event.OnResumeEvent;
-import roboguice.activity.event.OnStartEvent;
 import roboguice.activity.event.OnStopEvent;
+import roboguice.context.event.OnConfigurationChangedEvent;
+import roboguice.context.event.OnCreateEvent;
+import roboguice.context.event.OnDestroyEvent;
+import roboguice.context.event.OnStartEvent;
 import roboguice.event.EventManager;
 import roboguice.inject.ContentViewListener;
 import roboguice.inject.ContextScope;
@@ -64,7 +65,7 @@ public class RoboSherlockPreferenceActivity extends SherlockPreferenceActivity i
         preferenceListener = injector.getInstance(PreferenceListener.class);
         injector.injectMembersWithoutViews(this);
         super.onCreate(savedInstanceState);
-        eventManager.fire(new OnCreateEvent(savedInstanceState));
+        eventManager.fire(new OnCreateEvent<Activity>(this,savedInstanceState));
     }
 
     @Override
@@ -91,7 +92,7 @@ public class RoboSherlockPreferenceActivity extends SherlockPreferenceActivity i
     @Override
     protected void onStart() {
         super.onStart();
-        eventManager.fire(new OnStartEvent());
+        eventManager.fire(new OnStartEvent<Activity>(this));
     }
 
     @Override
@@ -124,7 +125,7 @@ public class RoboSherlockPreferenceActivity extends SherlockPreferenceActivity i
     @Override
     protected void onDestroy() {
         try {
-            eventManager.fire(new OnDestroyEvent());
+            eventManager.fire(new OnDestroyEvent<Activity>(this));
         } finally {
             try {
                 RoboGuice.destroyInjector(this);
@@ -138,7 +139,7 @@ public class RoboSherlockPreferenceActivity extends SherlockPreferenceActivity i
     public void onConfigurationChanged(Configuration newConfig) {
         final Configuration currentConfig = getResources().getConfiguration();
         super.onConfigurationChanged(newConfig);
-        eventManager.fire(new OnConfigurationChangedEvent(currentConfig, newConfig));
+        eventManager.fire(new OnConfigurationChangedEvent<Activity>(this,currentConfig, newConfig));
     }
 
     @Override

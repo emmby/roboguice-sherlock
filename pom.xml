@@ -7,7 +7,7 @@
     </parent>
     <groupId>com.github.rtyley</groupId>
     <artifactId>roboguice-sherlock</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6-roboguice30-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>RoboGuice-Sherlock</name>
     <description>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.roboguice</groupId>
             <artifactId>roboguice</artifactId>
-            <version>2.0</version>
+            <version>3.0-experimental-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.actionbarsherlock</groupId>
